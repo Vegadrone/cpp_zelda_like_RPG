@@ -20,6 +20,9 @@ int main(){
         (float)windowDimension[1] / 2.0f - 4.0f * (0.5f * (float)knight.height)
     };
 
+    //Direzione Sprite a sx -1, direzione sprite a dx 1
+    float rightLeft = 1.f;
+
     //FPS
     SetTargetFPS(60);
     //Game Loop
@@ -41,13 +44,14 @@ int main(){
 
             //sottrai la posizione della mappa con il vettore direzione normalizzato (1) scalato per la speed
             wmPos = Vector2Subtract(wmPos, Vector2Scale(Vector2Normalize(direction), speed));
+            direction.x < 0.f ? rightLeft = -1.f : rightLeft = 1.f;
         }
 
         //map drawing
         DrawTextureEx(worldMap, wmPos, 0.0, 4.0, WHITE);
 
         //character drawing
-        Rectangle source{0.f, 0.f, (float)knight.width/6.f, (float)knight.height};
+        Rectangle source{0.f, 0.f, rightLeft * (float)knight.width/6.f, (float)knight.height};
         Rectangle dest{knightPos.x, knightPos.y, 4.0f * (float)knight.width / 6.0f, 4.0f * (float)knight.height};
         DrawTexturePro(knight, source, dest, Vector2{}, 0.f, WHITE);
 
