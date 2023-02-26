@@ -41,26 +41,25 @@ void Character::tick(float deltaTime){
         // graffe e sulla stessa linea dell'if
 
         Vector2 direction{};
-        if (IsKeyDown(KEY_A))
-            direction.x -= 1.0;
-        if (IsKeyDown(KEY_D))
-            direction.x += 1.0;
-        if (IsKeyDown(KEY_W))
-            direction.y -= 1.0;
-        if (IsKeyDown(KEY_S))
-            direction.y += 1.0;
-        if (Vector2Length(direction) != 0.0)
-        {
-            // set wmPos = wmPos - direction
-
+        if (IsKeyDown(KEY_A)) direction.x -= 1.0;
+        if (IsKeyDown(KEY_D)) direction.x += 1.0;
+        if (IsKeyDown(KEY_W)) direction.y -= 1.0;
+        if (IsKeyDown(KEY_S)) direction.y += 1.0;
+        if (Vector2Length(direction) != 0.0){
+            // set worldPos = worldPos + direction
             // sottrai la posizione della mappa con il vettore direzione normalizzato (1) scalato per la speed
-            worldPos = Vector2Subtract(screenPos, Vector2Scale(Vector2Normalize(direction), speed));
+            worldPos = Vector2Add(worldPos, Vector2Scale(Vector2Normalize(direction), speed));
             direction.x < 0.f ? rightLeft = -1.f : rightLeft = 1.f;
             texture = run;
-        }
-        else
-        {
+        } else {
             texture = idle;
+        }
+        // update animation frame
+        runningTime += deltaTime;
+        if (runningTime >= updateTime){
+            frame++;
+            runningTime = 0.f;
+            if (frame > maxFrames) frame = 0;
         }
 }
 
