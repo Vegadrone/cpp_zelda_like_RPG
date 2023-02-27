@@ -9,7 +9,7 @@ class Character
         {
             return worldPos;
         }
-        void setScreenPos(int winWidth, int winHeight);
+        void setScreenPos(int winWidth, int winHeight );
         void tick(float deltaTime);
 
     private:

@@ -27,7 +27,7 @@ int main(){
             wmPos = Vector2Scale(Knight.getWolrdPos(), -1.f); 
 
             // map drawing
-            DrawTextureEx(worldMap, wmPos, 0.0, 4.0, WHITE);
+            DrawTextureEx(worldMap, wmPos, 0.0, 3.0, WHITE);
 
             //Character Drawing
             Knight.tick(GetFrameTime());
