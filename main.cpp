@@ -13,9 +13,9 @@ int main(){
 
         Texture2D worldMap = LoadTexture("textures/winter-map.png");
         Vector2 wmPos{0.0, 0.0};
-        const float mapScale{3.0f};
-        Character knight;
-        knight.setScreenPos(windowDimension[0], windowDimension[1]);
+        const float mapScale{4.0f};
+        
+        Character knight {windowDimension[0], windowDimension[1]};
 
         // FPS
         SetTargetFPS(60);

@@ -1,15 +1,12 @@
 #include "Character.h"
 #include "raymath.h"
 
-Character::Character(){
+Character::Character( int winWidth, int winHeight){
     width = texture.width / maxFrames;
     height = texture.height;
-}
-
-void Character::setScreenPos(int winWidth, int winHeight){
     screenPos = {
-        (float)winWidth / 2.0f - scaling * (0.5f * width),
-        (float)winHeight / 2.0f - scaling * (0.5f * height)};
+        static_cast<float>(winWidth) / 2.0f - scaling * (0.5f * width),
+        static_cast<float>(winHeight) / 2.0f - scaling * (0.5f * height)};
 }
 
 void Character::undoMovement(){

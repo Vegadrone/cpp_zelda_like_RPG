@@ -4,12 +4,10 @@ class Character
 {
     public:
         //Costruttore
-        Character();
-        Vector2 getWolrdPos()
-        {
+        Character(int winWidth, int winHeight);
+        Vector2 getWolrdPos(){
             return worldPos;
         }
-        void setScreenPos(int winWidth, int winHeight );
         void tick(float deltaTime);
         void undoMovement();
 
