@@ -11,6 +11,7 @@ class Character
         }
         void setScreenPos(int winWidth, int winHeight );
         void tick(float deltaTime);
+        void undoMovement();
 
     private:
         Texture2D texture{LoadTexture("textures/knight_idle_spritesheet.png")};
@@ -18,6 +19,7 @@ class Character
         Texture2D run{LoadTexture("textures/knight_run_spritesheet.png")};
         Vector2 screenPos{};
         Vector2 worldPos{};
+        Vector2 worldPosLastFrame { };
         // Direzione Sprite a sx -1, direzione sscaling prite a dx 1
         float rightLeft = 1.f;
         // animation update

@@ -13,8 +13,9 @@ int main(){
 
         Texture2D worldMap = LoadTexture("textures/winter-map.png");
         Vector2 wmPos{0.0, 0.0};
-        Character Knight;
-        Knight.setScreenPos(windowDimension[0], windowDimension[1]);
+        const float mapScale{3.0f};
+        Character knight;
+        knight.setScreenPos(windowDimension[0], windowDimension[1]);
 
         // FPS
         SetTargetFPS(60);
@@ -24,13 +25,22 @@ int main(){
             BeginDrawing();
             ClearBackground(WHITE);
 
-            wmPos = Vector2Scale(Knight.getWolrdPos(), -1.f); 
+            wmPos = Vector2Scale(knight.getWolrdPos(), -1.f); 
 
             // map drawing
-            DrawTextureEx(worldMap, wmPos, 0.0, 3.0, WHITE);
+            DrawTextureEx(worldMap, wmPos, 0.0, mapScale, WHITE);
 
             //Character Drawing
-            Knight.tick(GetFrameTime());
+            knight.tick(GetFrameTime());
+            //Hit map bound check
+            if( 
+                knight.getWolrdPos().x < 0.f ||
+                knight.getWolrdPos().y < 0.f ||
+                knight.getWolrdPos().x + windowDimension[0] > worldMap.width * mapScale ||
+                knight.getWolrdPos().y + windowDimension[1] > worldMap.height * mapScale
+            ){
+                knight.undoMovement();
+            }
 
             /*La mia soulzione al problema di animare il pupino
 
