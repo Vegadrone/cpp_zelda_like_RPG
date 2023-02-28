@@ -9,6 +9,7 @@ int main(){
         int windowDimension[2];
         windowDimension[0] = 384;
         windowDimension[1] = 384;
+        bool collision {};
 
         InitWindow(windowDimension[0], windowDimension[1], "RPG");
 
@@ -17,7 +18,10 @@ int main(){
         const float mapScale{4.0f};
         
         Character knight {windowDimension[0], windowDimension[1]};
-        Prop Rock {Vector2{0.f, 0.f}, LoadTexture("textures/Rock.png")};
+        Prop props[2]{
+            Prop{Vector2{300.f, 300.f}, LoadTexture("textures/Rock.png")},
+            Prop{Vector2{500.f, 400.f}, LoadTexture("textures/Sign.png")},
+        };
 
         // FPS
         SetTargetFPS(60);
@@ -33,8 +37,11 @@ int main(){
             DrawTextureEx(worldMap, wmPos, 0.0, mapScale, WHITE);
 
             //PropRrender
-            Rock.Render(knight.getWolrdPos());
-
+            for (auto prop : props)
+            {
+                prop.Render(knight.getWolrdPos());
+            }
+            
             //Character Drawing
             knight.tick(GetFrameTime());
             //Hit map bound check
@@ -46,6 +53,16 @@ int main(){
             ){
                 knight.undoMovement();
             }
+
+            for (auto prop : props)
+            {
+                if (CheckCollisionRecs(prop.getCollisionRec(knight.getWolrdPos()), knight.getCollisionRec()))
+                {
+                    knight.undoMovement();
+
+                };       
+            }
+            
 
             /*La mia soulzione al problema di animare il pupino
 

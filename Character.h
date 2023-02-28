@@ -10,6 +10,7 @@ class Character
         }
         void tick(float deltaTime);
         void undoMovement();
+        Rectangle getCollisionRec();
 
     private:
         Texture2D texture{LoadTexture("textures/knight_idle_spritesheet.png")};
