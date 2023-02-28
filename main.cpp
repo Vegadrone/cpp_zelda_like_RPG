@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "Character.h"
+#include "prop.h"
  
 
 int main(){
@@ -16,6 +17,7 @@ int main(){
         const float mapScale{4.0f};
         
         Character knight {windowDimension[0], windowDimension[1]};
+        Prop Rock {Vector2{0.f, 0.f}, LoadTexture("textures/Rock.png")};
 
         // FPS
         SetTargetFPS(60);
@@ -29,6 +31,9 @@ int main(){
 
             // map drawing
             DrawTextureEx(worldMap, wmPos, 0.0, mapScale, WHITE);
+
+            //PropRrender
+            Rock.Render(knight.getWolrdPos());
 
             //Character Drawing
             knight.tick(GetFrameTime());
