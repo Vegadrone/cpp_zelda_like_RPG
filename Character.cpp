@@ -9,19 +9,6 @@ Character::Character( int winWidth, int winHeight){
         static_cast<float>(winHeight) / 2.0f - scaling * (0.5f * height)};
 }
 
-void Character::undoMovement(){
-    worldPos = worldPosLastFrame;
-}
-
-Rectangle Character::getCollisionRec(){
-    return Rectangle{
-        screenPos.x,
-        screenPos.y,
-        width * scaling,
-        height * scaling,
-    };
-}
-
 void Character::tick(float deltaTime){
     // Puoi tenere il codice più compatto se usi gli if mettendo il codice da eseguire dopo la condizione senza
     // graffe e sulla stessa linea dell'if

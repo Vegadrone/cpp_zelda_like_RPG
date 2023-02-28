@@ -1,7 +1,8 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "Character.h"
-#include "prop.h"
+#include "Prop.h"
+#include "Enemy.h"
  
 
 int main(){
@@ -9,7 +10,6 @@ int main(){
         int windowDimension[2];
         windowDimension[0] = 384;
         windowDimension[1] = 384;
-        bool collision {};
 
         InitWindow(windowDimension[0], windowDimension[1], "RPG");
 
@@ -21,6 +21,12 @@ int main(){
         Prop props[2]{
             Prop{Vector2{300.f, 300.f}, LoadTexture("textures/Rock.png")},
             Prop{Vector2{500.f, 400.f}, LoadTexture("textures/Sign.png")},
+        };
+
+        Enemy goblin {
+            Vector2{0.f, 0.f}, //posizione del mostro
+            LoadTexture("textures/goblin_idle_spritesheet.png"), //Texture statica
+            LoadTexture("textures/goblin_run_spritesheet.png")
         };
 
         // FPS
@@ -54,15 +60,17 @@ int main(){
                 knight.undoMovement();
             }
 
+            //check prop collision
             for (auto prop : props)
             {
                 if (CheckCollisionRecs(prop.getCollisionRec(knight.getWolrdPos()), knight.getCollisionRec()))
                 {
                     knight.undoMovement();
-
                 };       
             }
             
+            //EnemyDrawing
+            goblin.tick(GetFrameTime());
 
             /*La mia soulzione al problema di animare il pupino
 
