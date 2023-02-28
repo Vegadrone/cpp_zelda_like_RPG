@@ -12,8 +12,8 @@ Character::Character( int winWidth, int winHeight){
 void Character::tick(float deltaTime){
     // Puoi tenere il codice più compatto se usi gli if mettendo il codice da eseguire dopo la condizione senza
     // graffe e sulla stessa linea dell'if
-    worldPosLastFrame = worldPos;
-
+    BaseCharacter::tick(deltaTime);
+    
     Vector2 direction{};
     if (IsKeyDown(KEY_A))
         direction.x -= 1.0;
@@ -33,17 +33,5 @@ void Character::tick(float deltaTime){
     else{
         texture = idle;
     }
-    // update animation frame
-    runningTime += deltaTime;
-    if (runningTime >= updateTime){
-        frame++;
-        runningTime = 0.f;
-        if (frame > maxFrames)
-            frame = 0;
-    }
-
-    // Character Drawing
-    Rectangle source{frame * width, 0.f, rightLeft * width, height};
-    Rectangle dest{screenPos.x, screenPos.y, scaling * width, scaling * height};
-    DrawTexturePro(texture, source, dest, Vector2{}, 0.f, WHITE);
+   
 }

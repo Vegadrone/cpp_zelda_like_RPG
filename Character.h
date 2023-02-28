@@ -6,7 +6,7 @@ class Character : public BaseCharacter
     public:
         //Costruttore
         Character(int winWidth, int winHeight);
-        void tick(float deltaTime);
+        virtual void tick(float deltaTime) override;
      
     private:
 
