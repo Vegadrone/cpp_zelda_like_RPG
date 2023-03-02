@@ -74,6 +74,12 @@ int main(){
             //EnemyDrawing
             goblin.tick(GetFrameTime());
 
+            //Check Enemy Collision With Weapon
+            if(IsKeyPressed(KEY_SPACE)){
+               if( CheckCollisionRecs(goblin.getCollisionRec(), knight.getWeaponCollisionRec())){
+                goblin.setAlive(false);
+             }
+            }
             /*La mia soulzione al problema di animare il pupino
 
             Rectangle source{frame * (float)knight_idle.width / frameInSpriteSheet, 0.f, rightLeft * (float)knight_idle.width / frameInSpriteSheet, (float)knight_idle.height};

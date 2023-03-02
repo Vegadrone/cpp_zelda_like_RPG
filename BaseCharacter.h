@@ -15,6 +15,8 @@ class BaseCharacter
         Rectangle getCollisionRec();
         virtual Vector2 getScreenPos() = 0; // Pure Virtual Function. si dichiarano con = 0 Questo rende BaseCharacter una classe astratta
                                             //e ciò siginifica che non possiamo fare istanze di questa classe ma solo istanze di classi figlie
+        bool getAlive(){ return alive;}
+        void setAlive(bool isAlive){alive = isAlive;}
 
     protected:
         Texture2D texture{LoadTexture("textures/knight_idle_spritesheet.png")};
@@ -36,6 +38,6 @@ class BaseCharacter
         Vector2 velocity {};
 
     private:
-        /* data */
+        bool alive{true};
 };
 #endif //chiude la compilazione condizionale

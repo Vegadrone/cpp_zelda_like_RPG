@@ -13,6 +13,7 @@ class Enemy : public BaseCharacter
         virtual Vector2 getScreenPos() override;
     private:
         Character* target; //Puntatore che punta all'indirizzo della classe Character
+        float damagePerSec {10.f};
         
 
 };
