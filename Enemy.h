@@ -14,6 +14,7 @@ class Enemy : public BaseCharacter
     private:
         Character* target; //Puntatore che punta all'indirizzo della classe Character
         float damagePerSec {10.f};
+        float radius {25.f};
         
 
 };

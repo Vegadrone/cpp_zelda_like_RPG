@@ -10,14 +10,16 @@ Enemy::Enemy(Vector2 pos, Texture2D idle_texture, Texture2D run_texture){
 
     width = texture.width / maxFrames;
     height = texture.height;
-    speed = 3.f;
+    speed = 2.f;
 }
 
 void Enemy::tick(float deltaTime)
 {
     if (!getAlive()) return;
     //ottenere toTarget Vector
-    velocity = Vector2Subtract(target->getScreenPos(), getScreenPos());
+    velocity = Vector2Subtract(target->getScreenPos(), getScreenPos());//vettore distanza tra enemy e knight(target)
+    if (Vector2Length(velocity) < radius) velocity = {}; //per non fare glitchare il nemico sul knight
+
     BaseCharacter::tick(deltaTime);
 
     if(CheckCollisionRecs(target->getCollisionRec(), getCollisionRec())){

@@ -3,6 +3,7 @@
 #include "Character.h"
 #include "Prop.h"
 #include "Enemy.h"
+#include <string>
  
 
 int main(){
@@ -23,13 +24,29 @@ int main(){
             Prop{Vector2{500.f, 400.f}, LoadTexture("textures/Sign.png")},
         };
 
+
         Enemy goblin {
-            Vector2{0.f, 0.f}, //posizione del mostro
+            Vector2{150.f, 300.f}, //posizione del mostro
             LoadTexture("textures/goblin_idle_spritesheet.png"), //Texture statica
             LoadTexture("textures/goblin_run_spritesheet.png")
         };
 
-        goblin.setTarget(&knight);
+        Enemy slime{
+            Vector2{500.f, 700.f},// posizione del mostro
+            LoadTexture("textures/slime_idle_spritesheet.png"), // Texture statica
+            LoadTexture("textures/slime_run_spritesheet.png")
+        };
+
+        Enemy* enemeies []{
+            &goblin,
+            &slime
+        };
+
+        for (auto enemy : enemeies)
+        {
+            enemy->setTarget(&knight);
+        };
+        
 
         // FPS
         SetTargetFPS(60);
@@ -49,7 +66,19 @@ int main(){
             {
                 prop.Render(knight.getWolrdPos());
             }
-            
+
+            if(!knight.getAlive())//knight is not alive
+            {
+                DrawText("GAME OVER!", 55.f, 45.f, 40, RED);
+                EndDrawing();
+                continue; //con continue, se entra nella condizione, il resto del loop sarà ignorato e ripartirà da capo.
+            }
+            else//knight is alive
+            {
+                std::string knightsHealth = "Health: ";
+                knightsHealth.append(std::to_string(knight.getHealth()), 0, 3);
+                DrawText(knightsHealth.c_str(), 55.f, 45.f, 40, RED);
+            }
             //Character Drawing
             knight.tick(GetFrameTime());
             //Hit map bound check
@@ -68,18 +97,30 @@ int main(){
                 if (CheckCollisionRecs(prop.getCollisionRec(knight.getWolrdPos()), knight.getCollisionRec()))
                 {
                     knight.undoMovement();
-                };       
+                    
+                };
+
+                for (auto enemy : enemeies)
+                { 
+                    if (CheckCollisionRecs(prop.getCollisionRec(enemy->getWolrdPos()), enemy->getCollisionRec()))
+                    {
+                        enemy->undoMovement();
+                    }
+                }
             }
             
             //EnemyDrawing
-            goblin.tick(GetFrameTime());
+            for (auto enemy : enemeies)
+            {
+                enemy->tick(GetFrameTime());
+                //Check Enemy Collision With Weapon
+                if(IsKeyPressed(KEY_SPACE)){
+                    if( CheckCollisionRecs(enemy->getCollisionRec(), knight.getWeaponCollisionRec())){
+                        enemy->setAlive(false);
+                    }
+                }
+            };
 
-            //Check Enemy Collision With Weapon
-            if(IsKeyPressed(KEY_SPACE)){
-               if( CheckCollisionRecs(goblin.getCollisionRec(), knight.getWeaponCollisionRec())){
-                goblin.setAlive(false);
-             }
-            }
             /*La mia soulzione al problema di animare il pupino
 
             Rectangle source{frame * (float)knight_idle.width / frameInSpriteSheet, 0.f, rightLeft * (float)knight_idle.width / frameInSpriteSheet, (float)knight_idle.height};

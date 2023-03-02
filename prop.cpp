@@ -21,4 +21,6 @@ Rectangle Prop::getCollisionRec(Vector2 knightPos){
         texture.width * scale,
         texture.height * scale,
     };
+
+    DrawRectangleLines(getCollisionRec(knightPos).x, getCollisionRec(knightPos).y, getCollisionRec(knightPos).width, getCollisionRec(knightPos).height, RED);
 }
