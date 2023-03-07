@@ -102,7 +102,7 @@ int main(){
 
                 for (auto enemy : enemeies)
                 { 
-                    if (CheckCollisionRecs(prop.getCollisionRec(enemy->getWolrdPos()), enemy->getCollisionRec()))
+                    if (CheckCollisionRecs(prop.getCollisionRec(knight.getWolrdPos()), enemy->getCollisionRec()))
                     {
                         enemy->undoMovement();
                     }
